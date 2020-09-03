@@ -1,0 +1,61 @@
+PODS:
+  - BigInt (5.1.3)
+  - capo_token_core_plugin (0.0.1):
+    - BigInt
+    - CoreBitcoin
+    - CryptoSwift
+    - Flutter
+    - libscrypt
+    - OpenSSL-Universal
+    - secp256k1
+    - TokenCoreCapo
+  - CoreBitcoin (1.0.3):
+    - libscrypt
+    - OpenSSL-Universal
+  - CryptoSwift (1.3.6)
+  - Flutter (1.0.0)
+  - libscrypt (1.0.0)
+  - OpenSSL-Universal (1.0.1):
+    - OpenSSL-Universal/Framework (= 1.0.1)
+  - OpenSSL-Universal/Framework (1.0.1)
+  - secp256k1 (0.2.3)
+  - TokenCoreCapo (1.0.5):
+    - BigInt
+    - CoreBitcoin
+    - CryptoSwift
+    - secp256k1
+
+DEPENDENCIES:
+  - capo_token_core_plugin (from `.symlinks/plugins/capo_token_core_plugin/ios`)
+  - Flutter (from `Flutter`)
+
+SPEC REPOS:
+  https://github.com/matteozero/Specs.git:
+    - BigInt
+    - CoreBitcoin
+    - CryptoSwift
+    - libscrypt
+    - OpenSSL-Universal
+    - secp256k1
+    - TokenCoreCapo
+
+EXTERNAL SOURCES:
+  capo_token_core_plugin:
+    :path: ".symlinks/plugins/capo_token_core_plugin/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  BigInt: 3e02c13c05a25ad7d5d10020ca028dceb8d38512
+  capo_token_core_plugin: 2d4eaa4ebc5aba930381b97ce57f3c8d9613cf14
+  CoreBitcoin: ce474a570c8a0d50843fc2d7721ef806e32549b2
+  CryptoSwift: 5c1e2719bf85962316c9cae7518944d88ae4b711
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  libscrypt: 6eb2410d04af789a6d002d8c95e57777563af15d
+  OpenSSL-Universal: c7d22ace9190117098651bd4478164c711bf17c1
+  secp256k1: b1089f2c016081ac609bce84905bbdd88546e015
+  TokenCoreCapo: 9f45a6414a118dd5bccb187a680c26cc7f129c4f
+
+PODFILE CHECKSUM: ae3cca9792a549973f6909c8e356dcf1fa153372
+
+COCOAPODS: 1.9.3
