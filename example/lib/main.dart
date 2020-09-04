@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:capo_token_core_plugin/capo_token_core_plugin.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:capo_token_core_plugin/capo_token_core_plugin.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,8 +24,13 @@ class Dialogs {
                     Center(
                       child: Column(children: [
                         CircularProgressIndicator(),
-                        SizedBox(height: 10,),
-                        Text("Please Wait....",style: TextStyle(color: Colors.blueAccent),)
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Please Wait....",
+                          style: TextStyle(color: Colors.blueAccent),
+                        )
                       ]),
                     )
                   ]));
@@ -38,26 +43,25 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-   static const MethodChannel _channel =
+  static const MethodChannel _channel =
       const MethodChannel('capo_token_core_plugin');
 
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-
+  String result = "Please waiting";
 
   @override
   void initState() {
     super.initState();
     initPlatformState();
   }
-  String wallet;
 
+  String wallet;
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async{
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       // Platform messages may fail, so we use a try/catch PlatformException.
 
       try {
@@ -99,19 +103,18 @@ class _MyAppState extends State<MyApp> {
     """;
 
         // String privateKey = "4c1b5f7aa4b3c7329caffb6217d79badb53e277e405f85fa87ec7d755694526f";
-        String randomMnemonic = await _channel.invokeMethod("randomMnemonic");
-
-        String keystore = await _channel.invokeMethod("exportPrivateKey",{  
-          "keystore":keystoreString,
-          "password":"12345678..."
-          // "password":"12345678..."
-        }).catchError((error){
-          print("error:${error.toString()}");
-        });
-        print("keystore: $keystore");
+        // String randomMnemonic = await _channel.invokeMethod("randomMnemonic");
+        //
+        // String keystore = await _channel.invokeMethod("exportPrivateKey",{
+        //   "keystore":keystoreString,
+        //   "password":"12345678..."
+        //   // "password":"12345678..."
+        // }).catchError((error){
+        //   print("error:${error.toString()}");
+        // });
+        // print("keystore: $keystore");
 
         // String randomMnemonic = await _channel.invokeMethod("randomMnemonic");
-
 
         // print("mnemonic: $randomMnemonic");
 
@@ -122,26 +125,29 @@ class _MyAppState extends State<MyApp> {
         // });
         // print("date2:${DateTime.now()}");
 
+        Future.delayed(Duration(seconds: 3), () async {
+          String nativeResult = await CapoTokenCorePlugin.exportMnemonic(
+              keystoreString, "12345678...");
 
+          setState(() {
+            result = nativeResult;
+          });
+          print("result: $result");
+        });
       } on PlatformException {
         wallet = 'Failed to get platform version.';
       }
     });
 
-
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
-
-    setState(() {
-      _platformVersion = wallet;
-    });
   }
 
   Future<void> _handleSubmit(BuildContext context) async {
     try {
-      Dialogs.showLoadingDialog(context, _keyLoader);//invoking login
+      Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
 //      await serivce.login(user.uid);
 //      Navigator.of(_keyLoader.currentContext,rootNavigator: true).pop();//close the dialoge
 //      Navigator.pushReplacementNamed(context, "/home");
@@ -153,22 +159,27 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: SimpleDialog(
-        key: _keyLoader,
-    backgroundColor: Colors.black54,
-    children: <Widget>[
-    Center(
-    child: Column(children: [
-    CircularProgressIndicator(),
-    SizedBox(height: 10,),
-    Text("Please Wait....",style: TextStyle(color: Colors.blueAccent),)
-    ]),
-    )
-    ]),
+        home: Scaffold(
+      appBar: AppBar(
+        title: const Text('Plugin example app'),
+      ),
+      body: SimpleDialog(
+          key: _keyLoader,
+          backgroundColor: Colors.black54,
+          children: <Widget>[
+            Center(
+              child: Column(children: [
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  result,
+                  style: TextStyle(color: Colors.blueAccent),
+                )
+              ]),
+            )
+          ]),
     ));
   }
 }
