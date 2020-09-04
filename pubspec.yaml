@@ -1,8 +1,8 @@
 name: capo_token_core_plugin
 description: Capo Native Plugin
 version: 0.0.1
-author:
-homepage:
+# author: Matteo
+homepage: https://github.com/matteozero/capo_token_core_plugin
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

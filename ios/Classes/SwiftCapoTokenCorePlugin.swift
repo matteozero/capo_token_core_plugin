@@ -22,6 +22,9 @@ public class SwiftCapoTokenCorePlugin: NSObject, FlutterPlugin {
         case CallMethod.importPrivateKey.rawValue:
             onImportPrivateKey(call, result: result)
 
+        case CallMethod.importKeystore.rawValue:
+            onImportKeystore(call, result: result)
+
         case CallMethod.exportMnemonic.rawValue:
             onExportMnemonic(call, result: result)
 
@@ -82,6 +85,34 @@ public class SwiftCapoTokenCorePlugin: NSObject, FlutterPlugin {
 
         } catch {
             result(FlutterError(code: ErrorCode.exportError.rawValue, message: "\(error.localizedDescription)", details: nil))
+        }
+    }
+
+    private func onImportKeystore(_ call: FlutterMethodCall, result: (Any?) -> Void) {
+        guard let arguments = isArgumentIllegal(call, result: result) else {
+            return
+        }
+        do {
+            let keystore = arguments["keystore"] as! String
+            let password = arguments["password"] as! String
+            let mapResult = try mapKeystoreString2Object(json: nil, keystoreString: keystore)
+
+            if let wallet = mapResult.1 {
+                let privateKey: String = try wallet.privateKey(password: password, isHDWalletExportWif: true)
+
+                print("privateKey: \(privateKey)")
+                let walletMeta = WalletMeta(chain: ChainType.eth, from: WalletFrom.keystore)
+                let wallet = try BasicWallet.importFromPrivateKey(privateKey, encryptedBy: password, metadata: walletMeta)
+
+                let keystore: String = wallet.keystore.dump()
+                result(keystore)
+            }
+
+            if let _ = mapResult.0 {
+                result(FlutterError(code: ErrorCode.illegalOperation.rawValue, message: "Keystore type not match..", details: nil))
+            }
+        } catch {
+            result(FlutterError(code: ErrorCode.error.rawValue, message: "\(error)", details: nil))
         }
     }
 

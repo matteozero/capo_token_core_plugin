@@ -12,9 +12,12 @@ enum CallMethod: String {
 
     case importMnenonic = "importMnenonic"
     
+    case importKeystore = "importKeystore"
+    
     case exportPrivateKey = "exportPrivateKey"
 
     case exportMnemonic = "exportMnemonic"
 
     case verifyPassword = "verifyPassword"
+    
 }

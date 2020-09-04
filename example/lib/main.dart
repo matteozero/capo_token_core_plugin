@@ -101,9 +101,9 @@ class _MyAppState extends State<MyApp> {
         // String privateKey = "4c1b5f7aa4b3c7329caffb6217d79badb53e277e405f85fa87ec7d755694526f";
         String randomMnemonic = await _channel.invokeMethod("randomMnemonic");
 
-        String keystore = await _channel.invokeMethod("verifyPassword",{  
+        String keystore = await _channel.invokeMethod("exportPrivateKey",{  
           "keystore":keystoreString,
-          "password":"12345678"
+          "password":"12345678..."
           // "password":"12345678..."
         }).catchError((error){
           print("error:${error.toString()}");

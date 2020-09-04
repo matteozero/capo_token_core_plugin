@@ -4,14 +4,27 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="164847e6-577e-4ef8-881e-6b9970ff44a0" name="Default Changelist" comment="" />
+    <list default="true" id="164847e6-577e-4ef8-881e-6b9970ff44a0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/capo/capo_token_core_plugin/CallMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/capo/capo_token_core_plugin/CallMethod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/capo/capo_token_core_plugin/CapoTokenCorePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/capo/capo_token_core_plugin/CapoTokenCorePlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/capo/capo_token_core_plugin/args/ExportArgs.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/capo/capo_token_core_plugin/args/ExportArgs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/CallMethod.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/CallMethod.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftCapoTokenCorePlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SwiftCapoTokenCorePlugin.swift" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_24" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1fzY97FigwRJnHLCzNWcegQ6xfn" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />

@@ -1,10 +1,11 @@
 package com.capo.capo_token_core_plugin;
 
+
 import android.app.Activity;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import androidx.annotation.NonNull;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lhalcyon.tokencore.foundation.crypto.Crypto;
 import com.lhalcyon.tokencore.foundation.utils.MnemonicUtil;
 import com.lhalcyon.tokencore.wallet.bip.Words;
 import com.lhalcyon.tokencore.wallet.ex.ChainType;
@@ -19,26 +20,19 @@ import com.lhalcyon.tokencore.wallet.keystore.ExHDMnemonicKeystore;
 import com.lhalcyon.tokencore.wallet.keystore.ExIdentityKeystore;
 import com.lhalcyon.tokencore.wallet.keystore.V3Keystore;
 import com.capo.capo_token_core_plugin.args.ArgsValid;
-import com.capo.capo_token_core_plugin.args.CreateIdentityArgs;
 import com.capo.capo_token_core_plugin.args.ExportArgs;
 import com.capo.capo_token_core_plugin.args.ImportPrivateKeyArgs;
 import com.capo.capo_token_core_plugin.args.RecoverIdentityArgs;
 import com.capo.capo_token_core_plugin.args.VerifyArgs;
-import com.capo.capo_token_core_plugin.model.FlutterExIdentity;
-import com.capo.capo_token_core_plugin.model.FlutterExMetadata;
-import com.capo.capo_token_core_plugin.model.FlutterExWallet;
 import com.capo.capo_token_core_plugin.util.KeystoreUtil;
 
-//import org.consenlabs.tokencore.wallet.Identity;
-//import org.consenlabs.tokencore.wallet.KeystoreStorage;
-//import org.consenlabs.tokencore.wallet.WalletManager;
+import org.consenlabs.tokencore.wallet.Identity;
+import org.consenlabs.tokencore.wallet.KeystoreStorage;
+import org.consenlabs.tokencore.wallet.WalletManager;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
-
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -51,35 +45,39 @@ import io.flutter.plugin.common.PluginRegistry;
 public class CapoTokenCorePlugin implements MethodCallHandler {
 
     private ObjectMapper objectMapper = new ObjectMapper();
-//    private final Activity activity;
-//
-    public CapoTokenCorePlugin() {
+
+    private final Activity activity;
+
+
+    private CapoTokenCorePlugin(Activity activity) {
+        this.activity = activity;
     }
-    /**
-     * Plugin registration.
-     */
+
 //    public static void registerWith(PluginRegistry.Registrar registrar) {
+//
 //        final MethodChannel channel = new MethodChannel(registrar.messenger(), "capo_token_core_plugin");
 //        channel.setMethodCallHandler(new CapoTokenCorePlugin());
 //    }
 
 
+    /**
+     * Plugin registration.
+     */
     public static void registerWith(PluginRegistry.Registrar registrar) {
-
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "capo_token_core_plugin");
-        channel.setMethodCallHandler(new CapoTokenCorePlugin());
+        channel.setMethodCallHandler(new CapoTokenCorePlugin(registrar.activity()));
     }
 
     @Override
-    public void onMethodCall(MethodCall call, Result result) {
-        if (call == null || call.method == null) {
+    public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+        if (call.method == null) {
             result.error(ErrorCode.CALL_ERROR, "call or call.method is null", call);
             return;
         }
         switch (call.method) {
 
             case CallMethod.randomMnemonic:
-                onRandomMnemonic(call, result);
+                onRandomMnemonic(result);
                 break;
             case CallMethod.exportMnemonic:
                 onExportMnemonic(call, result);
@@ -93,7 +91,9 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
             case CallMethod.importMnenonic:
                 onimportMnenonic(call, result);
                 break;
-
+            case CallMethod.importKeystore:
+                onimportKeystore(call, result);
+                break;
             case CallMethod.verifyPassword:
                 onVerifyPassword(call, result);
                 break;
@@ -115,12 +115,12 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
             Object arguments = call.arguments;
             String json = objectMapper.writeValueAsString(arguments);
             VerifyArgs args = objectMapper.readValue(json, VerifyArgs.class);
-            boolean isCorrect = false;
+            boolean isCorrect;
             if (KeystoreUtil.isIdentityKeystore(objectMapper,args.keystore)) {
                 ExIdentityKeystore identityKeystore = objectMapper.readValue(args.keystore, ExIdentityKeystore.class);
                 isCorrect = identityKeystore.verifyPassword(args.password);
             } else {
-                ExWallet wallet = mapKeystore2Wallet(args.keystore, args.password);
+                ExWallet wallet = mapKeystore2Wallet(args.keystore);
                 isCorrect = wallet.getKeystore().verifyPassword(args.password);
             }
             result.success(isCorrect ? "true" : "false");
@@ -149,18 +149,12 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
             exMetadata.setFrom(WalletFrom.PRIAVTE_KEY);
             exMetadata.setChainType(ChainType.ETHEREUM);
             exMetadata.setNetwork(Network.MAINNET);
-//            exMetadata.setSegWit(SegWit.NONE);
             exMetadata.setWalletType(WalletType.V3);
 
             V3Keystore keystore = new V3Keystore(exMetadata, args.password, args.privateKey, "");
             String keystoreJson = keystore.toJsonString();
             result.success(keystoreJson);
-//
-//            ExWallet exWallet = new ExWallet(keystore);
-//
-//            FlutterExMetadata meta = new FlutterExMetadata(exMetadata);
-//            FlutterExWallet wallet = new FlutterExWallet(meta, keystore.toJsonString(), exWallet.getAddress());
-//            String s = objectMapper.writeValueAsString(wallet);
+
         } catch (Exception e) {
             e.printStackTrace();
             result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
@@ -191,6 +185,49 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
 
     }
 
+    private void onimportKeystore(MethodCall call, Result result) {
+
+        try {
+            if (isArgumentIllegal(call, result)) {
+                return;
+            }
+
+            Object arguments = call.arguments;
+            String json = objectMapper.writeValueAsString(arguments);
+            ExportArgs args = objectMapper.readValue(json, ExportArgs.class);
+
+            ExWallet wallet = mapKeystore2Wallet(args.keystore);
+
+            WalletManager.storage = new KeystoreStorage() {
+                @Override
+                public File getKeystoreDir() {
+                    return activity.getFilesDir();
+                }
+            };
+            WalletManager.scanWallets();
+            String mnemonic = wallet.exportMnemonic(args.password).getMnemonic();
+            Identity identity = Identity.recoverIdentity(mnemonic,null,args.password, args.password,
+                    wallet.getMetadata().getNetwork().getValue(), wallet.getMetadata().getSegWit().getValue());
+
+            String privateKey = WalletManager.exportPrivateKey(identity.getWallets().get(0).getId(), args.password);
+            ExMetadata exMetadata = new ExMetadata();
+
+            exMetadata.setFrom(WalletFrom.KEYSTORE);
+            exMetadata.setChainType(ChainType.ETHEREUM);
+            exMetadata.setNetwork(Network.MAINNET);
+            exMetadata.setWalletType(WalletType.V3);
+
+            V3Keystore keystore = new V3Keystore(exMetadata, args.password, privateKey, "");
+            String keystoreJson = keystore.toJsonString();
+            result.success(keystoreJson);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
+        }
+
+    }
+
     private void onExportPrivateKey(MethodCall call, Result result) {
         try {
             if (isArgumentIllegal(call, result)) {
@@ -201,14 +238,27 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
             String json = objectMapper.writeValueAsString(arguments);
             ExportArgs args = objectMapper.readValue(json, ExportArgs.class);
 
-            ExWallet wallet = mapKeystore2Wallet(args.keystore, args.password);
-            String privateKey = wallet.exportPrivateKey(args.password);
+            ExWallet wallet = mapKeystore2Wallet(args.keystore);
+
+            WalletManager.storage = new KeystoreStorage() {
+                @Override
+                public File getKeystoreDir() {
+                    return activity.getFilesDir();
+                }
+            };
+            WalletManager.scanWallets();
+            String mnemonic = wallet.exportMnemonic(args.password).getMnemonic();
+            Identity identity = Identity.recoverIdentity(mnemonic,null,args.password, args.password,
+                    wallet.getMetadata().getNetwork().getValue(), wallet.getMetadata().getSegWit().getValue());
+
+            String privateKey = WalletManager.exportPrivateKey(identity.getWallets().get(0).getId(), args.password);
             result.success(privateKey);
         } catch (Exception e) {
             e.printStackTrace();
             result.error(ErrorCode.EXPORT_ERROR, "export error , " + e.getMessage(), null);
         }
     }
+
 
     private void onExportMnemonic(MethodCall call, Result result) {
         try {
@@ -218,12 +268,12 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
             Object arguments = call.arguments;
             String json = objectMapper.writeValueAsString(arguments);
             VerifyArgs args = objectMapper.readValue(json, VerifyArgs.class);
-            String mnemonic = "";
+            String mnemonic;
             if (KeystoreUtil.isIdentityKeystore(objectMapper,args.keystore)) {
                 ExIdentityKeystore identityKeystore = objectMapper.readValue(args.keystore, ExIdentityKeystore.class);
                 mnemonic = identityKeystore.decryptMnemonic(args.password);
             } else {
-                ExWallet wallet = mapKeystore2Wallet(args.keystore, args.password);
+                ExWallet wallet = mapKeystore2Wallet(args.keystore);
                 mnemonic = wallet.exportMnemonic(args.password).getMnemonic();
             }
             result.success(mnemonic);
@@ -234,51 +284,28 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
     }
 
 
-    @SuppressWarnings({"unused", "unchecked"})
-    private void onRandomMnemonic(MethodCall call, Result result) {
+    private void onRandomMnemonic(Result result) {
 
-        Map<String, Object> map = (Map<String, Object>) call.arguments;
         List<String> strings = MnemonicUtil.randomMnemonicCodes(Words.TWELVE);
         String mnemonic = MnemonicUtil.mnemonicToString(strings);
         result.success(mnemonic);
     }
 
-
-    private void handleRawIdentity(Result result, ExIdentity rawIdentity) {
-        try {
-            String keystore = rawIdentity.getKeystore().toString();
-            List<FlutterExWallet> wallets = new ArrayList<>();
-            for (int i = 0; i < rawIdentity.getWallets().size(); i++) {
-                ExWallet exWallet = rawIdentity.getWallets().get(i);
-                ExMetadata exMetadata = exWallet.getMetadata();
-                FlutterExMetadata metadata = new FlutterExMetadata(exMetadata);
-                FlutterExWallet wallet = new FlutterExWallet(metadata, exWallet.getKeystore().toJsonString(), exWallet.getAddress());
-                wallets.add(wallet);
-            }
-
-            FlutterExMetadata metadata = new FlutterExMetadata(rawIdentity.getMetadata());
-            FlutterExIdentity flutterExIdentity = new FlutterExIdentity(keystore, wallets, metadata);
-            String s = objectMapper.writeValueAsString(flutterExIdentity);
-            result.success((s));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            result.error(ErrorCode.ERROR, e.getMessage(), null);
-        }
-    }
-
-    private ExWallet mapKeystore2Wallet(String keystoreJson, String password) throws Exception {
+    private ExWallet mapKeystore2Wallet(String keystoreJson) throws Exception {
         if (KeystoreUtil.isIdentityKeystore(objectMapper,keystoreJson)) {
             throw new IllegalArgumentException("do not allow export identity keystore 2 private key");
         }
         ExWallet wallet = null;
-        if (KeystoreUtil.isHDMnemonicKeystore(objectMapper,keystoreJson)) {
-            ExHDMnemonicKeystore keystore = objectMapper.readValue(keystoreJson, ExHDMnemonicKeystore.class);
-            wallet = new ExWallet(keystore);
-        }
+
         if (KeystoreUtil.isV3Keystore(objectMapper,keystoreJson)) {
             V3Keystore keystore = objectMapper.readValue(keystoreJson, V3Keystore.class);
             wallet = new ExWallet(keystore);
         }
+        if (KeystoreUtil.isHDMnemonicKeystore(objectMapper,keystoreJson)) {
+            ExHDMnemonicKeystore keystore = objectMapper.readValue(keystoreJson, ExHDMnemonicKeystore.class);
+            wallet = new ExWallet(keystore);
+        }
+
         if (wallet == null) {
             throw new IllegalArgumentException("unrecognized keystore content");
         }
