@@ -7,6 +7,8 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
+typedef LikeCallback = void Function(Object value);
+
 class CapoTokenCorePlugin {
   static const MethodChannel _channel =
       const MethodChannel('capo_token_core_plugin');

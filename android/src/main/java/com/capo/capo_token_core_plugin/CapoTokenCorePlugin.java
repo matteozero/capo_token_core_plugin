@@ -2,6 +2,8 @@ package com.capo.capo_token_core_plugin;
 
 
 import android.app.Activity;
+import android.os.Handler;
+import android.os.HandlerThread;
 
 import androidx.annotation.NonNull;
 
@@ -53,13 +55,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
         this.activity = activity;
     }
 
-//    public static void registerWith(PluginRegistry.Registrar registrar) {
-//
-//        final MethodChannel channel = new MethodChannel(registrar.messenger(), "capo_token_core_plugin");
-//        channel.setMethodCallHandler(new CapoTokenCorePlugin());
-//    }
-
-
     /**
      * Plugin registration.
      */
@@ -107,180 +102,287 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
 
 
 
-    private void onVerifyPassword(MethodCall call, Result result) {
-        try {
-            if (isArgumentIllegal(call, result)) {
-                return;
-            }
-            Object arguments = call.arguments;
-            String json = objectMapper.writeValueAsString(arguments);
-            VerifyArgs args = objectMapper.readValue(json, VerifyArgs.class);
-            boolean isCorrect;
-            if (KeystoreUtil.isIdentityKeystore(objectMapper,args.keystore)) {
-                ExIdentityKeystore identityKeystore = objectMapper.readValue(args.keystore, ExIdentityKeystore.class);
-                isCorrect = identityKeystore.verifyPassword(args.password);
-            } else {
-                ExWallet wallet = mapKeystore2Wallet(args.keystore);
-                isCorrect = wallet.getKeystore().verifyPassword(args.password);
-            }
-            result.success(isCorrect ? "true" : "false");
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.error(ErrorCode.ERROR, e.getMessage(), null);
-        }
-    }
+    private void onVerifyPassword(final MethodCall call, final Result result) {
+        final Handler mHandler = new Handler();
+        HandlerThread mBackThread = new HandlerThread("capo_back_thread");
+        mBackThread.start();
+        Handler mBackHandler = new Handler(mBackThread.getLooper());
+        mBackHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                // 后台线程执行耗时操作，异步
 
-
-
-    private void onImportPrivateKey(MethodCall call, Result result) {
-        try {
-            if (isArgumentIllegal(call, result)) {
-                return;
-            }
-            Object arguments = call.arguments;
-            String json = objectMapper.writeValueAsString(arguments);
-            ImportPrivateKeyArgs args = objectMapper.readValue(json, ImportPrivateKeyArgs.class);
-
-            if (isArgumentValid(args, call, result)) {
-                return;
-            }
-            ExMetadata exMetadata = new ExMetadata();
-
-            exMetadata.setFrom(WalletFrom.PRIAVTE_KEY);
-            exMetadata.setChainType(ChainType.ETHEREUM);
-            exMetadata.setNetwork(Network.MAINNET);
-            exMetadata.setWalletType(WalletType.V3);
-
-            V3Keystore keystore = new V3Keystore(exMetadata, args.password, args.privateKey, "");
-            String keystoreJson = keystore.toJsonString();
-            result.success(keystoreJson);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
-        }
-
-    }
-
-
-    private void onimportMnenonic(MethodCall call, Result result) {
-        try {
-            if (isArgumentIllegal(call, result)) {
-                return;
-            }
-
-            Object arguments = call.arguments;
-            String json = objectMapper.writeValueAsString(arguments);
-            RecoverIdentityArgs args = objectMapper.readValue(json, RecoverIdentityArgs.class);
-            if (isArgumentValid(args, call, result)) {
-                return;
-            }
-            ExIdentity rawIdentity = ExIdentity.recoverIdentity(args.mnemonic, args.password, Network.MAINNET,SegWit.NONE);
-           String keystoreJson = rawIdentity.getEthereumWallet().getKeystore().toJsonString();
-           result.success(keystoreJson);
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
-        }
-
-    }
-
-    private void onimportKeystore(MethodCall call, Result result) {
-
-        try {
-            if (isArgumentIllegal(call, result)) {
-                return;
-            }
-
-            Object arguments = call.arguments;
-            String json = objectMapper.writeValueAsString(arguments);
-            ExportArgs args = objectMapper.readValue(json, ExportArgs.class);
-
-            ExWallet wallet = mapKeystore2Wallet(args.keystore);
-
-            WalletManager.storage = new KeystoreStorage() {
-                @Override
-                public File getKeystoreDir() {
-                    return activity.getFilesDir();
+                try {
+                    if (isArgumentIllegal(call, result)) {
+                        return;
+                    }
+                    Object arguments = call.arguments;
+                    String json = objectMapper.writeValueAsString(arguments);
+                    VerifyArgs args = objectMapper.readValue(json, VerifyArgs.class);
+                    boolean isCorrect;
+                    if (KeystoreUtil.isIdentityKeystore(objectMapper,args.keystore)) {
+                        ExIdentityKeystore identityKeystore = objectMapper.readValue(args.keystore, ExIdentityKeystore.class);
+                        isCorrect = identityKeystore.verifyPassword(args.password);
+                    } else {
+                        ExWallet wallet = mapKeystore2Wallet(args.keystore);
+                        isCorrect = wallet.getKeystore().verifyPassword(args.password);
+                    }
+                    result.success(isCorrect ? "true" : "false");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result.error(ErrorCode.ERROR, e.getMessage(), null);
                 }
-            };
-            WalletManager.scanWallets();
-            String mnemonic = wallet.exportMnemonic(args.password).getMnemonic();
-            Identity identity = Identity.recoverIdentity(mnemonic,null,args.password, args.password,
-                    wallet.getMetadata().getNetwork().getValue(), wallet.getMetadata().getSegWit().getValue());
 
-            String privateKey = WalletManager.exportPrivateKey(identity.getWallets().get(0).getId(), args.password);
-            ExMetadata exMetadata = new ExMetadata();
 
-            exMetadata.setFrom(WalletFrom.KEYSTORE);
-            exMetadata.setChainType(ChainType.ETHEREUM);
-            exMetadata.setNetwork(Network.MAINNET);
-            exMetadata.setWalletType(WalletType.V3);
-
-            V3Keystore keystore = new V3Keystore(exMetadata, args.password, privateKey, "");
-            String keystoreJson = keystore.toJsonString();
-            result.success(keystoreJson);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
-        }
+                // mHandler发消息，回到主线程更新UI
+            }
+        });
 
     }
 
-    private void onExportPrivateKey(MethodCall call, Result result) {
-        try {
-            if (isArgumentIllegal(call, result)) {
-                return;
-            }
 
-            Object arguments = call.arguments;
-            String json = objectMapper.writeValueAsString(arguments);
-            ExportArgs args = objectMapper.readValue(json, ExportArgs.class);
 
-            ExWallet wallet = mapKeystore2Wallet(args.keystore);
+    private void onImportPrivateKey(final MethodCall call, final Result result) {
 
-            WalletManager.storage = new KeystoreStorage() {
-                @Override
-                public File getKeystoreDir() {
-                    return activity.getFilesDir();
+        final Handler mHandler = new Handler();
+        HandlerThread mBackThread = new HandlerThread("capo_back_thread");
+        mBackThread.start();
+        Handler mBackHandler = new Handler(mBackThread.getLooper());
+        mBackHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                // 后台线程执行耗时操作，异步
+
+                try {
+                    if (isArgumentIllegal(call, result)) {
+                        return;
+                    }
+                    Object arguments = call.arguments;
+                    String json = objectMapper.writeValueAsString(arguments);
+                    ImportPrivateKeyArgs args = objectMapper.readValue(json, ImportPrivateKeyArgs.class);
+
+                    if (isArgumentValid(args, call, result)) {
+                        return;
+                    }
+                    ExMetadata exMetadata = new ExMetadata();
+
+                    exMetadata.setFrom(WalletFrom.PRIAVTE_KEY);
+                    exMetadata.setChainType(ChainType.ETHEREUM);
+                    exMetadata.setNetwork(Network.MAINNET);
+                    exMetadata.setWalletType(WalletType.V3);
+
+                    V3Keystore keystore = new V3Keystore(exMetadata, args.password, args.privateKey, "");
+                    String keystoreJson = keystore.toJsonString();
+                    result.success(keystoreJson);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
                 }
-            };
-            WalletManager.scanWallets();
-            String mnemonic = wallet.exportMnemonic(args.password).getMnemonic();
-            Identity identity = Identity.recoverIdentity(mnemonic,null,args.password, args.password,
-                    wallet.getMetadata().getNetwork().getValue(), wallet.getMetadata().getSegWit().getValue());
 
-            String privateKey = WalletManager.exportPrivateKey(identity.getWallets().get(0).getId(), args.password);
-            result.success(privateKey);
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.error(ErrorCode.EXPORT_ERROR, "export error , " + e.getMessage(), null);
-        }
+                // mHandler发消息，回到主线程更新UI
+            }
+        });
+
+
     }
 
 
-    private void onExportMnemonic(MethodCall call, Result result) {
-        try {
-            if (isArgumentIllegal(call, result)) {
-                return;
+    private void onimportMnenonic(final MethodCall call, final Result result) {
+        final Handler mHandler = new Handler();
+        HandlerThread mBackThread = new HandlerThread("capo_back_thread");
+        mBackThread.start();
+        Handler mBackHandler = new Handler(mBackThread.getLooper());
+        mBackHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                // 后台线程执行耗时操作，异步
+
+                try {
+                    if (isArgumentIllegal(call, result)) {
+                        return;
+                    }
+
+                    Object arguments = call.arguments;
+                    String json = objectMapper.writeValueAsString(arguments);
+                    RecoverIdentityArgs args = objectMapper.readValue(json, RecoverIdentityArgs.class);
+                    if (isArgumentValid(args, call, result)) {
+                        return;
+                    }
+                    ExIdentity rawIdentity = ExIdentity.recoverIdentity(args.mnemonic, args.password, Network.MAINNET,SegWit.NONE);
+                    String keystoreJson = rawIdentity.getEthereumWallet().getKeystore().toJsonString();
+                    result.success(keystoreJson);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
+                }
+
+
+                // mHandler发消息，回到主线程更新UI
             }
-            Object arguments = call.arguments;
-            String json = objectMapper.writeValueAsString(arguments);
-            VerifyArgs args = objectMapper.readValue(json, VerifyArgs.class);
-            String mnemonic;
-            if (KeystoreUtil.isIdentityKeystore(objectMapper,args.keystore)) {
-                ExIdentityKeystore identityKeystore = objectMapper.readValue(args.keystore, ExIdentityKeystore.class);
-                mnemonic = identityKeystore.decryptMnemonic(args.password);
-            } else {
-                ExWallet wallet = mapKeystore2Wallet(args.keystore);
-                mnemonic = wallet.exportMnemonic(args.password).getMnemonic();
+        });
+
+
+
+    }
+
+    private void onimportKeystore(final MethodCall call, final Result result) {
+
+        final Handler mHandler = new Handler();
+
+        HandlerThread mBackThread = new HandlerThread("capo_back_thread");
+        mBackThread.start();
+        Handler mBackHandler = new Handler(mBackThread.getLooper());
+        mBackHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                // 后台线程执行耗时操作，异步
+                try {
+                    if (isArgumentIllegal(call, result)) {
+                        return;
+                    }
+
+                    Object arguments = call.arguments;
+                    String json = objectMapper.writeValueAsString(arguments);
+                    ExportArgs args = objectMapper.readValue(json, ExportArgs.class);
+
+                    ExWallet wallet = mapKeystore2Wallet(args.keystore);
+
+                    WalletManager.storage = new KeystoreStorage() {
+                        @Override
+                        public File getKeystoreDir() {
+                            return activity.getFilesDir();
+                        }
+                    };
+                    WalletManager.scanWallets();
+                    String mnemonic = wallet.exportMnemonic(args.password).getMnemonic();
+                    Identity identity = Identity.recoverIdentity(mnemonic,null,args.password, args.password,
+                            wallet.getMetadata().getNetwork().getValue(), wallet.getMetadata().getSegWit().getValue());
+
+                    String privateKey = WalletManager.exportPrivateKey(identity.getWallets().get(0).getId(), args.password);
+                    ExMetadata exMetadata = new ExMetadata();
+
+                    exMetadata.setFrom(WalletFrom.KEYSTORE);
+                    exMetadata.setChainType(ChainType.ETHEREUM);
+                    exMetadata.setNetwork(Network.MAINNET);
+                    exMetadata.setWalletType(WalletType.V3);
+
+                    V3Keystore keystore = new V3Keystore(exMetadata, args.password, privateKey, "");
+                    final String keystoreJson = keystore.toJsonString();
+
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.success(keystoreJson);
+                        }
+                    });
+
+
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                     result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
+                        }
+                    });
+
+                }
+                // mHandler发消息，回到主线程更新UI
             }
-            result.success(mnemonic);
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.error(ErrorCode.EXPORT_ERROR, e.getMessage(), null);
-        }
+        });
+
+
+
+
+    }
+
+    private void onExportPrivateKey(final MethodCall call, final Result result) {
+
+        final Handler mHandler = new Handler();
+        HandlerThread mBackThread = new HandlerThread("capo_back_thread");
+        mBackThread.start();
+        Handler mBackHandler = new Handler(mBackThread.getLooper());
+        mBackHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                // 后台线程执行耗时操作，异步
+
+                try {
+                    if (isArgumentIllegal(call, result)) {
+                        return;
+                    }
+
+                    Object arguments = call.arguments;
+                    String json = objectMapper.writeValueAsString(arguments);
+                    ExportArgs args = objectMapper.readValue(json, ExportArgs.class);
+
+                    ExWallet wallet = mapKeystore2Wallet(args.keystore);
+
+                    WalletManager.storage = new KeystoreStorage() {
+                        @Override
+                        public File getKeystoreDir() {
+                            return activity.getFilesDir();
+                        }
+                    };
+                    WalletManager.scanWallets();
+                    String mnemonic = wallet.exportMnemonic(args.password).getMnemonic();
+                    Identity identity = Identity.recoverIdentity(mnemonic,null,args.password, args.password,
+                            wallet.getMetadata().getNetwork().getValue(), wallet.getMetadata().getSegWit().getValue());
+
+                    String privateKey = WalletManager.exportPrivateKey(identity.getWallets().get(0).getId(), args.password);
+                    result.success(privateKey);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result.error(ErrorCode.EXPORT_ERROR, "export error , " + e.getMessage(), null);
+                }
+
+
+                // mHandler发消息，回到主线程更新UI
+            }
+        });
+
+
+    }
+
+
+    private void onExportMnemonic(final MethodCall call, final Result result) {
+
+        final Handler mHandler = new Handler();
+        HandlerThread mBackThread = new HandlerThread("capo_back_thread");
+        mBackThread.start();
+        Handler mBackHandler = new Handler(mBackThread.getLooper());
+        mBackHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                // 后台线程执行耗时操作，异步
+
+                try {
+                    if (isArgumentIllegal(call, result)) {
+                        return;
+                    }
+                    Object arguments = call.arguments;
+                    String json = objectMapper.writeValueAsString(arguments);
+                    VerifyArgs args = objectMapper.readValue(json, VerifyArgs.class);
+                    String mnemonic;
+                    if (KeystoreUtil.isIdentityKeystore(objectMapper,args.keystore)) {
+                        ExIdentityKeystore identityKeystore = objectMapper.readValue(args.keystore, ExIdentityKeystore.class);
+                        mnemonic = identityKeystore.decryptMnemonic(args.password);
+                    } else {
+                        ExWallet wallet = mapKeystore2Wallet(args.keystore);
+                        mnemonic = wallet.exportMnemonic(args.password).getMnemonic();
+                    }
+                    result.success(mnemonic);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result.error(ErrorCode.EXPORT_ERROR, e.getMessage(), null);
+                }
+
+
+                // mHandler发消息，回到主线程更新UI
+            }
+        });
+
     }
 
 

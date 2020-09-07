@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -102,7 +103,6 @@ class _MyAppState extends State<MyApp> {
 }
     """;
 
-        // String privateKey = "4c1b5f7aa4b3c7329caffb6217d79badb53e277e405f85fa87ec7d755694526f";
         // String randomMnemonic = await _channel.invokeMethod("randomMnemonic");
         //
         // String keystore = await _channel.invokeMethod("exportPrivateKey",{
@@ -124,9 +124,11 @@ class _MyAppState extends State<MyApp> {
         //   "password":"12345678..."
         // });
         // print("date2:${DateTime.now()}");
+        String privateKey =
+            "4c1b5f7aa4b3c7329caffb6217d79badb53e277e405f85fa87ec7d755694526f";
 
         Future.delayed(Duration(seconds: 3), () async {
-          String nativeResult = await CapoTokenCorePlugin.exportMnemonic(
+          String nativeResult = await CapoTokenCorePlugin.importKeystore(
               keystoreString, "12345678...");
 
           setState(() {
