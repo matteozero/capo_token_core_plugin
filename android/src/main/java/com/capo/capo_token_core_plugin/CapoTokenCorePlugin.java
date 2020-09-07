@@ -117,7 +117,7 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                     Object arguments = call.arguments;
                     String json = objectMapper.writeValueAsString(arguments);
                     VerifyArgs args = objectMapper.readValue(json, VerifyArgs.class);
-                    boolean isCorrect;
+                    final boolean isCorrect;
                     if (KeystoreUtil.isIdentityKeystore(objectMapper,args.keystore)) {
                         ExIdentityKeystore identityKeystore = objectMapper.readValue(args.keystore, ExIdentityKeystore.class);
                         isCorrect = identityKeystore.verifyPassword(args.password);
@@ -125,10 +125,22 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                         ExWallet wallet = mapKeystore2Wallet(args.keystore);
                         isCorrect = wallet.getKeystore().verifyPassword(args.password);
                     }
-                    result.success(isCorrect ? "true" : "false");
-                } catch (Exception e) {
+
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.success(isCorrect ? "true" : "false");
+                        }
+                    });
+                } catch (final Exception e) {
                     e.printStackTrace();
-                    result.error(ErrorCode.ERROR, e.getMessage(), null);
+
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.error(ErrorCode.ERROR, e.getMessage(), null);
+                        }
+                    });
                 }
 
             }
@@ -167,12 +179,23 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                     exMetadata.setWalletType(WalletType.V3);
 
                     V3Keystore keystore = new V3Keystore(exMetadata, args.password, args.privateKey, "");
-                    String keystoreJson = keystore.toJsonString();
-                    result.success(keystoreJson);
+                    final String keystoreJson = keystore.toJsonString();
 
-                } catch (Exception e) {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.success(keystoreJson);
+                        }
+                    });
+
+                } catch (final Exception e) {
                     e.printStackTrace();
-                    result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
+                        }
+                    });
                 }
             }
         });
@@ -201,11 +224,22 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                         return;
                     }
                     ExIdentity rawIdentity = ExIdentity.recoverIdentity(args.mnemonic, args.password, Network.MAINNET,SegWit.NONE);
-                    String keystoreJson = rawIdentity.getEthereumWallet().getKeystore().toJsonString();
-                    result.success(keystoreJson);
-                } catch (Exception e) {
+                    final String keystoreJson = rawIdentity.getEthereumWallet().getKeystore().toJsonString();
+
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.success(keystoreJson);
+                        }
+                    });
+                } catch (final Exception e) {
                     e.printStackTrace();
-                    result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
+                        }
+                    });
                 }
 
             }
@@ -315,11 +349,22 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                     Identity identity = Identity.recoverIdentity(mnemonic,null,args.password, args.password,
                             wallet.getMetadata().getNetwork().getValue(), wallet.getMetadata().getSegWit().getValue());
 
-                    String privateKey = WalletManager.exportPrivateKey(identity.getWallets().get(0).getId(), args.password);
-                    result.success(privateKey);
-                } catch (Exception e) {
+                    final String privateKey = WalletManager.exportPrivateKey(identity.getWallets().get(0).getId(), args.password);
+
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.success(privateKey);
+                        }
+                    });
+                } catch (final Exception e) {
                     e.printStackTrace();
-                    result.error(ErrorCode.EXPORT_ERROR, "export error , " + e.getMessage(), null);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.error(ErrorCode.EXPORT_ERROR, "export error , " + e.getMessage(), null);
+                        }
+                    });
                 }
             }
         });
@@ -344,7 +389,7 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                     Object arguments = call.arguments;
                     String json = objectMapper.writeValueAsString(arguments);
                     VerifyArgs args = objectMapper.readValue(json, VerifyArgs.class);
-                    String mnemonic;
+                    final String mnemonic;
                     if (KeystoreUtil.isIdentityKeystore(objectMapper,args.keystore)) {
                         ExIdentityKeystore identityKeystore = objectMapper.readValue(args.keystore, ExIdentityKeystore.class);
                         mnemonic = identityKeystore.decryptMnemonic(args.password);
@@ -352,10 +397,21 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                         ExWallet wallet = mapKeystore2Wallet(args.keystore);
                         mnemonic = wallet.exportMnemonic(args.password).getMnemonic();
                     }
-                    result.success(mnemonic);
-                } catch (Exception e) {
+
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.success(mnemonic);
+                        }
+                    });
+                } catch (final Exception e) {
                     e.printStackTrace();
-                    result.error(ErrorCode.EXPORT_ERROR, e.getMessage(), null);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.error(ErrorCode.EXPORT_ERROR, e.getMessage(), null);
+                        }
+                    });
                 }
 
             }
