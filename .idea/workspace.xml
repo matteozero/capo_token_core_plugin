@@ -7,15 +7,6 @@
     <list default="true" id="164847e6-577e-4ef8-881e-6b9970ff44a0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/com/capo/capo_token_core_plugin/CapoTokenCorePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/capo/capo_token_core_plugin/CapoTokenCorePlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/android/src/main/java/com/capo/capo_token_core_plugin/CapoTokenCorePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/android/src/main/java/com/capo/capo_token_core_plugin/CapoTokenCorePlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/lib/capo_token_core_plugin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/lib/capo_token_core_plugin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/test/capo_token_core_plugin_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/test/capo_token_core_plugin_test.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/capo_token_core_plugin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/capo_token_core_plugin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/capo_token_core_plugin_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/capo_token_core_plugin_test.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

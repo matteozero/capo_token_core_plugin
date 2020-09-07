@@ -110,8 +110,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
         mBackHandler.post(new Runnable() {
             @Override
             public void run() {
-                // 后台线程执行耗时操作，异步
-
                 try {
                     if (isArgumentIllegal(call, result)) {
                         return;
@@ -133,8 +131,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                     result.error(ErrorCode.ERROR, e.getMessage(), null);
                 }
 
-
-                // mHandler发消息，回到主线程更新UI
             }
         });
 
@@ -151,7 +147,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
         mBackHandler.post(new Runnable() {
             @Override
             public void run() {
-                // 后台线程执行耗时操作，异步
 
                 try {
                     if (isArgumentIllegal(call, result)) {
@@ -179,8 +174,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                     e.printStackTrace();
                     result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
                 }
-
-                // mHandler发消息，回到主线程更新UI
             }
         });
 
@@ -196,8 +189,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
         mBackHandler.post(new Runnable() {
             @Override
             public void run() {
-                // 后台线程执行耗时操作，异步
-
                 try {
                     if (isArgumentIllegal(call, result)) {
                         return;
@@ -217,8 +208,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                     result.error(ErrorCode.IMPORT_ERROR, e.getMessage(), null);
                 }
 
-
-                // mHandler发消息，回到主线程更新UI
             }
         });
 
@@ -236,7 +225,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
         mBackHandler.post(new Runnable() {
             @Override
             public void run() {
-                // 后台线程执行耗时操作，异步
                 try {
                     if (isArgumentIllegal(call, result)) {
                         return;
@@ -288,7 +276,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                     });
 
                 }
-                // mHandler发消息，回到主线程更新UI
             }
         });
 
@@ -306,8 +293,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
         mBackHandler.post(new Runnable() {
             @Override
             public void run() {
-                // 后台线程执行耗时操作，异步
-
                 try {
                     if (isArgumentIllegal(call, result)) {
                         return;
@@ -336,9 +321,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                     e.printStackTrace();
                     result.error(ErrorCode.EXPORT_ERROR, "export error , " + e.getMessage(), null);
                 }
-
-
-                // mHandler发消息，回到主线程更新UI
             }
         });
 
@@ -355,8 +337,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
         mBackHandler.post(new Runnable() {
             @Override
             public void run() {
-                // 后台线程执行耗时操作，异步
-
                 try {
                     if (isArgumentIllegal(call, result)) {
                         return;
@@ -378,8 +358,6 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                     result.error(ErrorCode.EXPORT_ERROR, e.getMessage(), null);
                 }
 
-
-                // mHandler发消息，回到主线程更新UI
             }
         });
 
