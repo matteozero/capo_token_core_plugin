@@ -14,49 +14,64 @@ class CapoTokenCorePlugin {
       const MethodChannel('capo_token_core_plugin');
 
   static Future<String> get randomMnemonic async {
-    final String mnemonic = await _channel.invokeMethod('randomMnemonic');
+    final String mnemonic =
+        await _channel.invokeMethod('randomMnemonic').catchError((e) {
+      throw e;
+    });
     return mnemonic;
   }
 
   static Future<String> importPrivateKey(
       String privateKey, String password) async {
-    final String keystore = await _channel.invokeMethod(
-        'importPrivateKey', {"privateKey": privateKey, "password": password});
+    final String keystore = await _channel.invokeMethod('importPrivateKey',
+        {"privateKey": privateKey, "password": password}).catchError((e) {
+      throw e;
+    });
 
     return keystore;
   }
 
   static Future<String> importMnenonic(String mnemonic, String password) async {
-    final String keystore = await _channel.invokeMethod(
-        'importMnenonic', {"mnemonic": mnemonic, "password": password});
+    final String keystore = await _channel.invokeMethod('importMnenonic',
+        {"mnemonic": mnemonic, "password": password}).catchError((e) {
+      throw e;
+    });
     return keystore;
   }
 
   static Future<String> importKeystore(
       String keystoreJson, String password) async {
-    final String keystore = await _channel.invokeMethod(
-        'importKeystore', {"keystore": keystoreJson, "password": password});
+    final String keystore = await _channel.invokeMethod('importKeystore',
+        {"keystore": keystoreJson, "password": password}).catchError((e) {
+      throw e;
+    });
     return keystore;
   }
 
   static Future<String> exportPrivateKey(
       String keystoreJson, String password) async {
-    final String privateKey = await _channel.invokeMethod(
-        'exportPrivateKey', {"keystore": keystoreJson, "password": password});
+    final String privateKey = await _channel.invokeMethod('exportPrivateKey',
+        {"keystore": keystoreJson, "password": password}).catchError((e) {
+      throw e;
+    });
     return privateKey;
   }
 
   static Future<String> exportMnemonic(
       String keystoreJson, String password) async {
-    final String mnemonic = await _channel.invokeMethod(
-        'exportMnemonic', {"keystore": keystoreJson, "password": password});
+    final String mnemonic = await _channel.invokeMethod('exportMnemonic',
+        {"keystore": keystoreJson, "password": password}).catchError((e) {
+      throw e;
+    });
     return mnemonic;
   }
 
   static Future<bool> verifyPassword(
       String keystoreJson, String password) async {
-    final String verify = await _channel.invokeMethod(
-        'verifyPassword', {"keystore": keystoreJson, "password": password});
+    final String verify = await _channel.invokeMethod('verifyPassword',
+        {"keystore": keystoreJson, "password": password}).catchError((e) {
+      throw e;
+    });
     if (verify == "true") {
       return true;
     } else {

@@ -5,25 +5,156 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="164847e6-577e-4ef8-881e-6b9970ff44a0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/.metadata" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/app/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/app/src/debug/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/app/src/main/kotlin/com/example/bug/MainActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/app/src/profile/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/android/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Flutter/AppFrameworkInfo.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Flutter/Debug.xcconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Flutter/Release.xcconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/AppDelegate.swift" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Base.lproj/LaunchScreen.storyboard" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Base.lproj/Main.storyboard" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Info.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/ios/Runner/Runner-Bridging-Header.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/lib/main.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/pubspec.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/pubspec.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bug/test/widget_test.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/.metadata" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/app/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/app/src/debug/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/app/src/main/kotlin/com/example/bug/MainActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/app/src/profile/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/android/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Flutter/AppFrameworkInfo.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Flutter/Debug.xcconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Flutter/Release.xcconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/AppDelegate.swift" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Base.lproj/LaunchScreen.storyboard" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Base.lproj/Main.storyboard" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Info.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/ios/Runner/Runner-Bridging-Header.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/lib/main.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/pubspec.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/pubspec.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/bug/test/widget_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/capo_token_core_plugin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/capo_token_core_plugin.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/capo_token_core_plugin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/capo_token_core_plugin/capo_token_core_plugin.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/capo_token_core_plugin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/capo_token_core_plugin.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="FA8211A03263" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_28" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1fzY97FigwRJnHLCzNWcegQ6xfn" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
@@ -47,6 +178,9 @@
     </task>
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="264" y="194" key="#PSD" timestamp="1599012210348">
       <screen x="41" y="23" width="1399" height="877" />
@@ -66,45 +200,49 @@
     </state>
     <state x="441" y="191" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/38.23.1402.877@38.23.1402.877" timestamp="1597222239432" />
     <state x="445" y="191" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/43.23.1397.877@43.23.1397.877" timestamp="1599439025578" />
-    <state width="1331" height="239" key="GridCell.Tab.0.bottom" timestamp="1599534092482">
-      <screen x="44" y="23" width="1396" height="877" />
+    <state width="1331" height="239" key="GridCell.Tab.0.bottom" timestamp="1599551565909">
+      <screen x="41" y="23" width="1399" height="877" />
     </state>
     <state width="1331" height="217" key="GridCell.Tab.0.bottom/37.23.1403.877@37.23.1403.877" timestamp="1597286008163" />
     <state width="1331" height="269" key="GridCell.Tab.0.bottom/39.23.1401.877@39.23.1401.877" timestamp="1599451447862" />
     <state width="1331" height="239" key="GridCell.Tab.0.bottom/40.23.1400.877@40.23.1400.877" timestamp="1599464982042" />
-    <state width="1331" height="239" key="GridCell.Tab.0.bottom/41.23.1399.877@41.23.1399.877" timestamp="1599458366280" />
+    <state width="1331" height="239" key="GridCell.Tab.0.bottom/41.23.1399.877@41.23.1399.877" timestamp="1599551565909" />
     <state width="1331" height="269" key="GridCell.Tab.0.bottom/43.23.1397.877@43.23.1397.877" timestamp="1599472967227" />
     <state width="1331" height="239" key="GridCell.Tab.0.bottom/44.23.1396.877@44.23.1396.877" timestamp="1599534092482" />
-    <state width="1331" height="239" key="GridCell.Tab.0.center" timestamp="1599534092481">
-      <screen x="44" y="23" width="1396" height="877" />
+    <state width="1331" height="239" key="GridCell.Tab.0.center" timestamp="1599551565909">
+      <screen x="41" y="23" width="1399" height="877" />
     </state>
     <state width="1331" height="217" key="GridCell.Tab.0.center/37.23.1403.877@37.23.1403.877" timestamp="1597286008163" />
     <state width="1331" height="269" key="GridCell.Tab.0.center/39.23.1401.877@39.23.1401.877" timestamp="1599451447861" />
     <state width="1331" height="239" key="GridCell.Tab.0.center/40.23.1400.877@40.23.1400.877" timestamp="1599464982042" />
-    <state width="1331" height="239" key="GridCell.Tab.0.center/41.23.1399.877@41.23.1399.877" timestamp="1599458366280" />
+    <state width="1331" height="239" key="GridCell.Tab.0.center/41.23.1399.877@41.23.1399.877" timestamp="1599551565909" />
     <state width="1331" height="269" key="GridCell.Tab.0.center/43.23.1397.877@43.23.1397.877" timestamp="1599472967213" />
     <state width="1331" height="239" key="GridCell.Tab.0.center/44.23.1396.877@44.23.1396.877" timestamp="1599534092481" />
-    <state width="1331" height="239" key="GridCell.Tab.0.left" timestamp="1599534092481">
-      <screen x="44" y="23" width="1396" height="877" />
+    <state width="1331" height="239" key="GridCell.Tab.0.left" timestamp="1599551565909">
+      <screen x="41" y="23" width="1399" height="877" />
     </state>
     <state width="1331" height="217" key="GridCell.Tab.0.left/37.23.1403.877@37.23.1403.877" timestamp="1597286008162" />
     <state width="1331" height="269" key="GridCell.Tab.0.left/39.23.1401.877@39.23.1401.877" timestamp="1599451447861" />
     <state width="1331" height="239" key="GridCell.Tab.0.left/40.23.1400.877@40.23.1400.877" timestamp="1599464982041" />
-    <state width="1331" height="239" key="GridCell.Tab.0.left/41.23.1399.877@41.23.1399.877" timestamp="1599458366279" />
+    <state width="1331" height="239" key="GridCell.Tab.0.left/41.23.1399.877@41.23.1399.877" timestamp="1599551565909" />
     <state width="1331" height="269" key="GridCell.Tab.0.left/43.23.1397.877@43.23.1397.877" timestamp="1599472967204" />
     <state width="1331" height="239" key="GridCell.Tab.0.left/44.23.1396.877@44.23.1396.877" timestamp="1599534092481" />
-    <state width="1331" height="239" key="GridCell.Tab.0.right" timestamp="1599534092482">
-      <screen x="44" y="23" width="1396" height="877" />
+    <state width="1331" height="239" key="GridCell.Tab.0.right" timestamp="1599551565909">
+      <screen x="41" y="23" width="1399" height="877" />
     </state>
     <state width="1331" height="217" key="GridCell.Tab.0.right/37.23.1403.877@37.23.1403.877" timestamp="1597286008163" />
     <state width="1331" height="269" key="GridCell.Tab.0.right/39.23.1401.877@39.23.1401.877" timestamp="1599451447861" />
     <state width="1331" height="239" key="GridCell.Tab.0.right/40.23.1400.877@40.23.1400.877" timestamp="1599464982042" />
-    <state width="1331" height="239" key="GridCell.Tab.0.right/41.23.1399.877@41.23.1399.877" timestamp="1599458366280" />
+    <state width="1331" height="239" key="GridCell.Tab.0.right/41.23.1399.877@41.23.1399.877" timestamp="1599551565909" />
     <state width="1331" height="269" key="GridCell.Tab.0.right/43.23.1397.877@43.23.1397.877" timestamp="1599472967219" />
     <state width="1331" height="239" key="GridCell.Tab.0.right/44.23.1396.877@44.23.1396.877" timestamp="1599534092482" />
     <state x="255" y="120" key="SettingsEditor" timestamp="1599187585904">
       <screen x="40" y="23" width="1400" height="877" />
     </state>
     <state x="255" y="120" key="SettingsEditor/40.23.1400.877@40.23.1400.877" timestamp="1599187585904" />
+    <state x="400" y="203" width="670" height="676" key="search.everywhere.popup" timestamp="1600314280198">
+      <screen x="43" y="23" width="1397" height="877" />
+    </state>
+    <state x="400" y="203" width="670" height="676" key="search.everywhere.popup/43.23.1397.877@43.23.1397.877" timestamp="1600314280198" />
   </component>
 </project>
