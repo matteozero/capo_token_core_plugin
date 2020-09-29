@@ -275,19 +275,7 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                     ExportArgs args = objectMapper.readValue(json, ExportArgs.class);
 
                     ExWallet wallet = mapKeystore2Wallet(args.keystore);
-
-                    WalletManager.storage = new KeystoreStorage() {
-                        @Override
-                        public File getKeystoreDir() {
-                            return activity.getFilesDir();
-                        }
-                    };
-                    WalletManager.scanWallets();
-                    String mnemonic = wallet.exportMnemonic(args.password).getMnemonic();
-                    Identity identity = Identity.recoverIdentity(mnemonic,null,args.password, args.password,
-                            wallet.getMetadata().getNetwork().getValue(), wallet.getMetadata().getSegWit().getValue());
-
-                    String privateKey = WalletManager.exportPrivateKey(identity.getWallets().get(0).getId(), args.password);
+                    final String privateKey = wallet.exportPrivateKey(args.password);
                     ExMetadata exMetadata = new ExMetadata();
 
                     exMetadata.setFrom(WalletFrom.KEYSTORE);
