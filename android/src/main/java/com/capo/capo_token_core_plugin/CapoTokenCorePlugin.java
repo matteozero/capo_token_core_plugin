@@ -65,6 +65,11 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+
+        if( objectMapper.getDeserializationConfig().isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)){
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        }
+        
         if (call.method == null) {
             result.error(ErrorCode.CALL_ERROR, "call or call.method is null", call);
             return;
@@ -337,26 +342,14 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                     ExportArgs args = objectMapper.readValue(json, ExportArgs.class);
 
                     ExWallet wallet = mapKeystore2Wallet(args.keystore);
-
-                    WalletManager.storage = new KeystoreStorage() {
-                        @Override
-                        public File getKeystoreDir() {
-                            return activity.getFilesDir();
-                        }
-                    };
-                    WalletManager.scanWallets();
-                    String mnemonic = wallet.exportMnemonic(args.password).getMnemonic();
-                    Identity identity = Identity.recoverIdentity(mnemonic,null,args.password, args.password,
-                            wallet.getMetadata().getNetwork().getValue(), wallet.getMetadata().getSegWit().getValue());
-
-                    final String privateKey = WalletManager.exportPrivateKey(identity.getWallets().get(0).getId(), args.password);
-
+                    final String privateKey = wallet.exportPrivateKey(args.password);
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             result.success(privateKey);
                         }
                     });
+
                 } catch (final Exception e) {
                     e.printStackTrace();
                     mHandler.post(new Runnable() {
@@ -435,6 +428,15 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
 
         if (KeystoreUtil.isV3Keystore(objectMapper,keystoreJson)) {
             V3Keystore keystore = objectMapper.readValue(keystoreJson, V3Keystore.class);
+            if(keystore.getMetadata() == null){
+                ExMetadata exMetadata = new ExMetadata();
+
+                exMetadata.setFrom(WalletFrom.KEYSTORE);
+                exMetadata.setChainType(ChainType.ETHEREUM);
+                exMetadata.setNetwork(Network.MAINNET);
+                exMetadata.setWalletType(WalletType.V3);
+                keystore.setMetadata(exMetadata);
+            }
             wallet = new ExWallet(keystore);
         }
         if (KeystoreUtil.isHDMnemonicKeystore(objectMapper,keystoreJson)) {
