@@ -202,12 +202,18 @@ public class SwiftCapoTokenCorePlugin: NSObject, FlutterPlugin {
             let json = try JSONSerialization.jsonObject(with: jsonData!) as! JSONObject
             theJson = json
         } else {
+            
             theJson = json!
         }
         if let _ = theJson["identifier"] {
             let identityKeystore = try IdentityKeystore(json: theJson)
             return (identityKeystore, nil)
         } else {
+            if((theJson[WalletMeta.key] as? JSONObject) == nil){
+                let mata = WalletMeta(chain: ChainType.eth, from: WalletFrom.keystore, network: Network.mainnet, segwit: SegWit.none)
+                theJson[WalletMeta.key] = mata.toJSON()
+            }
+            
             let wallet = try BasicWallet(json: theJson)
             return (nil, wallet)
         }
