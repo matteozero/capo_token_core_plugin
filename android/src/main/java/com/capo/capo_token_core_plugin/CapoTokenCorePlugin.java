@@ -7,6 +7,7 @@ import android.os.HandlerThread;
 
 import androidx.annotation.NonNull;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lhalcyon.tokencore.foundation.utils.MnemonicUtil;
 import com.lhalcyon.tokencore.wallet.bip.Words;
