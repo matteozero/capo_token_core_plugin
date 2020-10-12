@@ -417,12 +417,20 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
 
         if (KeystoreUtil.isV3Keystore(objectMapper,keystoreJson)) {
             V3Keystore keystore = objectMapper.readValue(keystoreJson, V3Keystore.class);
-            ExMetadata exMetadata = new ExMetadata();
-            exMetadata.setFrom(WalletFrom.KEYSTORE);
-            exMetadata.setChainType(ChainType.ETHEREUM);
-            exMetadata.setNetwork(Network.MAINNET);
-            exMetadata.setWalletType(WalletType.V3);
-            keystore.setMetadata(exMetadata);
+            if(keystore.getMetadata() != null &&
+                    keystore.getMetadata().getChainType() != ChainType.ETHEREUM){
+
+                keystore.getMetadata().setChainType(ChainType.ETHEREUM);
+            }
+            if(keystore.getMetadata() == null){
+                ExMetadata exMetadata = new ExMetadata();
+                exMetadata.setFrom(WalletFrom.KEYSTORE);
+                exMetadata.setChainType(ChainType.ETHEREUM);
+                exMetadata.setNetwork(Network.MAINNET);
+                exMetadata.setWalletType(WalletType.V3);
+                keystore.setMetadata(exMetadata);
+            }
+
             wallet = new ExWallet(keystore);
         }
         if (KeystoreUtil.isHDMnemonicKeystore(objectMapper,keystoreJson)) {
