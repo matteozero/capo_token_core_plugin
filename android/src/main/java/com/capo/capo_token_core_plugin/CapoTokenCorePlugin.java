@@ -431,6 +431,8 @@ public class CapoTokenCorePlugin implements MethodCallHandler {
                 keystore.setMetadata(exMetadata);
             }
 
+
+
             wallet = new ExWallet(keystore);
         }
         if (KeystoreUtil.isHDMnemonicKeystore(objectMapper,keystoreJson)) {
