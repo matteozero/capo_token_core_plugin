@@ -18,8 +18,8 @@ PODS:
   - OpenSSL-Universal (1.0.1):
     - OpenSSL-Universal/Framework (= 1.0.1)
   - OpenSSL-Universal/Framework (1.0.1)
-  - secp256k1 (0.2.3)
-  - TokenCoreCapo (1.0.5):
+  - secp256k1 (0.2.7)
+  - TokenCoreCapo (1.0.8):
     - BigInt
     - CoreBitcoin
     - CryptoSwift
@@ -53,8 +53,8 @@ SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   libscrypt: 6eb2410d04af789a6d002d8c95e57777563af15d
   OpenSSL-Universal: c7d22ace9190117098651bd4478164c711bf17c1
-  secp256k1: b1089f2c016081ac609bce84905bbdd88546e015
-  TokenCoreCapo: 9f45a6414a118dd5bccb187a680c26cc7f129c4f
+  secp256k1: 6de6a10e6cf0aaa4749c0319e3dd4ca9fa7030aa
+  TokenCoreCapo: b8458959cb69196ee675edfb4276e18287f8f346
 
 PODFILE CHECKSUM: ae3cca9792a549973f6909c8e356dcf1fa153372
 

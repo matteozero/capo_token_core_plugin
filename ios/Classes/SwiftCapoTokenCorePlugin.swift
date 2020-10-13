@@ -141,7 +141,7 @@ public class SwiftCapoTokenCorePlugin: NSObject, FlutterPlugin {
         do {
             let keystore = arguments["keystore"] as! String
             let password = arguments["password"] as! String
-            let mapResult = try mapKeystoreString2Object(json: nil, keystoreString: keystore)
+            let mapResult = try mapKeystoreString2Object(json: nil, keystoreString: keystore,isExportPrivateKey: true)
 
             if let wallet = mapResult.1 {
                 let privateKey: String = try wallet.privateKey(password: password, isHDWalletExportWif: true)
@@ -195,7 +195,7 @@ public class SwiftCapoTokenCorePlugin: NSObject, FlutterPlugin {
         return arguments
     }
 
-    func mapKeystoreString2Object(json: JSONObject?, keystoreString: String? = nil) throws -> (IdentityKeystore?, BasicWallet?) {
+    func mapKeystoreString2Object(json: JSONObject?, keystoreString: String? = nil,isExportPrivateKey:Bool = false) throws -> (IdentityKeystore?, BasicWallet?) {
         var theJson: JSONObject
         if let keystoreStr = keystoreString {
             let jsonData: Data? = keystoreStr.data(using: .utf8)
@@ -214,7 +214,7 @@ public class SwiftCapoTokenCorePlugin: NSObject, FlutterPlugin {
                 theJson[WalletMeta.key] = mata.toJSON()
             }
             
-            let wallet = try BasicWallet(json: theJson)
+            let wallet = try BasicWallet(json: theJson,isExportPrivateKey: isExportPrivateKey)
             return (nil, wallet)
         }
     }
