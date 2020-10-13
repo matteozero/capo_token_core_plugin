@@ -98,7 +98,7 @@ public class SwiftCapoTokenCorePlugin: NSObject, FlutterPlugin {
             let mapResult = try mapKeystoreString2Object(json: nil, keystoreString: keystore)
 
             if let wallet = mapResult.1 {
-                let privateKey: String = try wallet.privateKey(password: password, isHDWalletExportWif: true)
+                let privateKey: String = try wallet.privateKey(password: password, isHDWalletExportWif: false)
 
                 print("privateKey: \(privateKey)")
                 let walletMeta = WalletMeta(chain: ChainType.eth, from: WalletFrom.keystore)
