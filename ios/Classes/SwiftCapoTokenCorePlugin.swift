@@ -48,6 +48,7 @@ public class SwiftCapoTokenCorePlugin: NSObject, FlutterPlugin {
             do {
                 let mnemonic = arguments["mnemonic"] as! String
                 let password = arguments["password"] as! String
+                
                 let walletMeta = WalletMeta(chain: ChainType.eth, from: WalletFrom.mnemonic)
                 let identity = try Identity.recoverIdentity(metadata: walletMeta, mnemonic: mnemonic, password: password)
 
@@ -157,14 +158,12 @@ public class SwiftCapoTokenCorePlugin: NSObject, FlutterPlugin {
             do {
                 let privateKey = arguments["privateKey"] as! String
                 let password = arguments["password"] as! String
-
                 let walletMeta = WalletMeta(chain: ChainType.eth, from: WalletFrom.privateKey)
                 let wallet = try BasicWallet.importFromPrivateKey(privateKey, encryptedBy: password, metadata: walletMeta)
 
                 let keystore: String = wallet.keystore.dump()
                 DispatchQueue.main.async {
                     result(keystore)
-
                 }
             } catch {
                 DispatchQueue.main.async {
@@ -280,7 +279,7 @@ public class SwiftCapoTokenCorePlugin: NSObject, FlutterPlugin {
                 theJson[WalletMeta.key] = mata.toJSON()
             }
 
-            let wallet = try BasicWallet(json: theJson)
+            let wallet = try BasicWallet(json: theJson,isExportPrivateKey: isExportPrivate)
             return (nil, wallet)
         }
     }
